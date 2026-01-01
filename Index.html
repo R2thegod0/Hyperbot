@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyper Bot | Ultimate Discord Utility</title>
+    <style>
+        :root {
+            --bg-dark: #000000;
+            --bg-light: #111111;
+            --primary: #ffffff; 
+            --primary-hover: #cccccc;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --border: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            background-color: var(--bg-dark);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            letter-spacing: -1px;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--border);
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-main);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: black;
+        }
+        .btn-primary:hover { 
+            background-color: var(--primary-hover); 
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { 
+            border-color: var(--primary);
+            background-color: var(--bg-light);
+        }
+
+        /* --- MOBILE MENU --- */
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- CONTENT PAGES --- */
+        .page {
+            display: none;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            padding: 6rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-logo-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            border: 4px solid var(--border);
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: var(--text-main);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover { 
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon { font-size: 2rem; margin-bottom: 1.5rem; filter: grayscale(100%); }
+        .feature-card h3 { margin-bottom: 1rem; font-size: 1.4rem; color: var(--primary); }
+        .feature-card p { color: var(--text-muted); font-size: 1rem; }
+
+        /* --- GUIDE PAGE --- */
+        .guide-nav {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .guide-nav button {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        
+        .guide-nav button:hover, .guide-nav button.active {
+            color: black;
+            background: white;
+            border-color: white;
+        }
+
+        .guide-section {
+            margin-bottom: 4rem;
+            scroll-margin-top: 100px;
+        }
+
+        .guide-section h2 { 
+            margin-bottom: 1.5rem; 
+            font-size: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        
+        .command-block {
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .command-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cmd-name {
+            font-family: monospace;
+            background: #222;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .cmd-desc { color: var(--text-muted); }
+        
+        .cmd-args {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+            font-family: monospace;
+        }
+
+        /* --- LEGAL PAGES --- */
+        .legal-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .legal-content h1 { font-size: 3rem; margin-bottom: 3rem; text-align: center; }
+        .legal-content h2 { margin: 3rem 0 1rem; color: var(--primary); }
+        .legal-content p, .legal-content li { color: var(--text-muted); margin-bottom: 1rem; }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--bg-light);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .footer-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .footer-logo-img {
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            object-fit: cover;
+        }
+        
+        .footer-brand span {
+            color: var(--primary);
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: var(--bg-dark);
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; color: white; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo" onclick="switchPage('home')">
+            <!-- BOT LOGO -->
+            <img src="hyper-logo.jpg" alt="Bot Logo"> 
+            Hyper Bot
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <div class="nav-links" id="navLinks">
+            <a class="nav-link active" onclick="switchPage('home')">Home</a>
+            <a class="nav-link" onclick="switchPage('guide')">Documentation</a>
+            <a class="nav-link" onclick="switchPage('tos')">Terms</a>
+            <a class="nav-link" onclick="switchPage('privacy')">Privacy</a>
+            <a href="https://discord.com/oauth2/authorize?client_id=1411597240128241734" target="_blank" class="btn btn-primary">Add to Discord</a>
+            <a href="https://discord.gg/sH7FbFZQyb" target="_blank" class="btn btn-secondary">Support</a>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <!-- BOT LOGO (LARGE) -->
+            <img src="hyper-logo.jpg" alt="Hyper Bot" class="hero-logo-img">
+            <h1>The Only Bot You Need.</h1>
+            <p>Advanced moderation, automated support tickets, leveling, giveaways, and server utilities. All in one powerful, monochrome package.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="window.open('https://discord.com/oauth2/authorize?client_id=1411597240128241734', '_blank')">Invite Bot</button>
+                <button class="btn btn-secondary" onclick="switchPage('guide')">View Commands</button>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Protection</h3>
+                <p>Logging, Anti-Raid, Tempbans, Lockdowns, and Automod filters.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎫</div>
+                <h3>Support</h3>
+                <p>Ticket panels with transcripts, claiming, and feedback loops.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Engagement</h3>
+                <p>Leveling system with role rewards, voice XP, and leaderboards.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎉</div>
+                <h3>Events</h3>
+                <p>Host giveaways with role requirements, bonus entries for boosters, and automatic rerolls.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Stats</h3>
+                <p>Live member counters, boost tracking, and goal channels.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Utilities</h3>
+                <p>Tags, Reminders, Sticky Messages, AFK, and Polls.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- GUIDE PAGE -->
+    <div id="guide" class="page">
+        <div class="hero" style="padding: 2rem 0; border: none;">
+            <h1>Command Reference</h1>
+            <p>Complete documentation for all modules.</p>
+        </div>
+
+        <div class="guide-nav">
+            <button onclick="scrollToSection('admin')">Administration</button>
+            <button onclick="scrollToSection('mod')">Moderation</button>
+            <button onclick="scrollToSection('ticket')">Tickets</button>
+            <button onclick="scrollToSection('level')">Levels</button>
+            <button onclick="scrollToSection('util')">Utility</button>
+            <button onclick="scrollToSection('fun')">Fun</button>
+        </div>
+
+        <!-- 1. ADMINISTRATION -->
+        <div id="admin" class="guide-section">
+            <h2>Administration & Setup</h2>
+            
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/setmodrole</span>
+                    <span class="cmd-desc">Set the role allowed to use moderator commands.</span>
+                </div>
+                <div class="cmd-args">Args: role</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/log_setup</span>
+                    <span class="cmd-desc">Configure logging channels.</span>
+                </div>
+                <div class="cmd-args">Args: log_type (Mod/Server/Join/All), channel</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/log_ignore</span>
+                    <span class="cmd-desc">Stop logging messages from a specific channel (e.g. spam).</span>
+                </div>
+                <div class="cmd-args">Args: channel</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/setup_welcome</span>
+                    <span class="cmd-desc">Set up welcome image cards.</span>
+                </div>
+                <div class="cmd-args">Args: channel, background_url (optional)</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/setup_stats</span>
+                    <span class="cmd-desc">Create locked voice channels for member counts.</span>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/rolepanel</span>
+                    <span class="cmd-desc">Create a Reaction Role panel.</span>
+                </div>
+                <div class="cmd-args">Args: title, description, mode (Toggle/Pick One)</div>
+            </div>
+
+             <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/role_add</span>
+                    <span class="cmd-desc">Add a button to a role panel.</span>
+                </div>
+                <div class="cmd-args">Args: message_id, role, label, emoji, style</div>
+            </div>
+        </div>
+
+        <!-- 2. MODERATION -->
+        <div id="mod" class="guide-section">
+            <h2>Moderation</h2>
+            
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/ban</span> <span class="cmd-desc">Ban a user.</span>
+                </div>
+                <div class="cmd-args">Args: user, reason</div>
+            </div>
+            
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/tempban</span> <span class="cmd-desc">Ban a user temporarily.</span>
+                </div>
+                <div class="cmd-args">Args: user, duration (e.g. 1d, 30m), reason</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/kick</span> <span class="cmd-desc">Kick a user.</span>
+                </div>
+                <div class="cmd-args">Args: user, reason</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/mute</span> <span class="cmd-desc">Timeout a user.</span>
+                </div>
+                <div class="cmd-args">Args: user, minutes, reason</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/unmute</span> <span class="cmd-desc">Remove timeout.</span>
+                </div>
+                <div class="cmd-args">Args: user</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/warn</span> <span class="cmd-desc">Issue a warning.</span>
+                </div>
+                <div class="cmd-args">Args: user, reason</div>
+            </div>
+
+             <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/history</span> <span class="cmd-desc">View all mod actions against a user.</span>
+                </div>
+                <div class="cmd-args">Args: user</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/lock</span> <span class="cmd-desc">Lock current channel.</span>
+                </div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/nuke</span> <span class="cmd-desc">Clone and delete channel (Clears history).</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. TICKETS -->
+        <div id="ticket" class="guide-section">
+            <h2>Support Tickets</h2>
+            
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/setup_ticket</span> <span class="cmd-desc">Create the ticket panel interface.</span>
+                </div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/configure_option</span> <span class="cmd-desc">Link a dropdown option to a category/role.</span>
+                </div>
+                <div class="cmd-args">Args: panel_id, option_name, role, category</div>
+            </div>
+
+            <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/add</span> <span class="cmd-desc">Add user to ticket.</span>
+                </div>
+                <div class="cmd-args">Args: user</div>
+            </div>
+
+             <div class="command-block">
+                <div class="command-header">
+                    <span class="cmd-name">/claim</span> <span class="cmd-desc">Assign ticket to yourself.</span>
+                </div>
+            
