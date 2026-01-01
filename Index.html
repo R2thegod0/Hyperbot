@@ -115,8 +115,12 @@
         /* --- HOME PAGE --- */
         .hero { text-align: center; padding: 80px 0; }
         .hero-logo { 
-            width: 120px; height: 120px; background: #222; border-radius: 50%; 
-            margin: 0 auto 30px; display: grid; place-items: center; font-size: 2rem; border: 1px solid #444;
+            width: 120px; height: 120px; 
+            border-radius: 50%; 
+            margin: 0 auto 30px; 
+            display: block; 
+            object-fit: cover; /* Ensures image doesn't stretch */
+            border: 2px solid rgba(255,255,255,0.1);
             animation: bob 3s ease-in-out infinite;
         }
         @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -189,7 +193,8 @@
     <nav class="glass">
         <div class="container" style="display:flex; width:100%; justify-content:space-between; align-items:center;">
             <div class="nav-logo" onclick="switchPage('home')">
-                <span style="font-size:1.2rem;">⚡</span> HYPER
+                <img src="hyper-logo.jpg" alt="Hyper" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+                HYPER
             </div>
             <div class="nav-links desktop">
                 <a onclick="switchPage('home')" class="nav-link">Home</a>
@@ -205,7 +210,7 @@
 
         <section id="home" class="page-section active">
             <div class="hero">
-                <div class="hero-logo glass">H</div>
+                <img src="hyper-logo.jpg" class="hero-logo" alt="Hyper Bot Logo">
                 <h1>The Only Bot You Need</h1>
                 <p>Complete protection, engagement, and utility for your Discord community. Powered by Horizon Studios.</p>
                 <div style="display:flex; gap:15px; justify-content:center;">
@@ -241,7 +246,6 @@
                 </div>
             </div>
         </section>
-
         <section id="guide" class="page-section">
             <div class="hero" style="padding: 40px 0;">
                 <h1>Documentation</h1>
@@ -255,7 +259,7 @@
                     <a href="#tickets">Tickets</a>
                     <a href="#levels">Leveling</a>
                     <a href="#utility">Utility</a>
-                    <a href="#fun">Giveaways</a>
+                    <a href="#fun">Fun & Events</a>
                 </div>
             </div>
 
@@ -271,12 +275,17 @@
                 <div class="command-block glass">
                     <span class="cmd-name">/log_setup</span>
                     <span class="cmd-args">Args: channel, events</span>
-                    <span class="cmd-desc">Connects the audit logging system to a channel to track deleted messages and bans.</span>
+                    <span class="cmd-desc">Connects the audit logging system to a channel to track deleted messages, bans, and edits.</span>
                 </div>
                 <div class="command-block glass">
                     <span class="cmd-name">/setup_welcome</span>
                     <span class="cmd-args">Args: channel, message, image (optional)</span>
                     <span class="cmd-desc">Initializes the visual welcomer with customizable text and backgrounds.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/rolepanel</span>
+                    <span class="cmd-args">Args: channel, title</span>
+                    <span class="cmd-desc">Creates a reaction role menu allowing users to self-assign roles.</span>
                 </div>
             </div>
 
@@ -290,9 +299,29 @@
                     <span class="cmd-desc">Permanently bans a user from the server.</span>
                 </div>
                 <div class="command-block glass">
+                    <span class="cmd-name">/kick</span>
+                    <span class="cmd-args">Args: user, reason</span>
+                    <span class="cmd-desc">Removes a user from the server but allows them to rejoin.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/mute (Timeout)</span>
+                    <span class="cmd-args">Args: user, duration, reason</span>
+                    <span class="cmd-desc">Times out a user, preventing them from typing or joining voice channels.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/warn</span>
+                    <span class="cmd-args">Args: user, reason</span>
+                    <span class="cmd-desc">Issues a formal warning to a user which is logged in their history.</span>
+                </div>
+                <div class="command-block glass">
                     <span class="cmd-name">/tempban</span>
                     <span class="cmd-args">Args: user, duration (e.g. 24h), reason</span>
                     <span class="cmd-desc">Bans a user and automatically unbans them after the set duration.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/history</span>
+                    <span class="cmd-args">Args: user</span>
+                    <span class="cmd-desc">Displays a comprehensive list of past infractions for a specific user.</span>
                 </div>
                 <div class="command-block glass">
                     <span class="cmd-name">/lock</span>
@@ -308,7 +337,7 @@
 
             <div id="tickets" class="doc-category">
                 <h2>Support Tickets</h2>
-                <p>Private 1-on-1 user assistance.</p>
+                <p>Private 1-on-1 user assistance for Support Staff.</p>
                 
                 <div class="command-block glass">
                     <span class="cmd-name">/setup_ticket</span>
@@ -316,9 +345,40 @@
                     <span class="cmd-desc">Deploys the "Create Ticket" panel to a channel.</span>
                 </div>
                 <div class="command-block glass">
+                    <span class="cmd-name">/configure_option</span>
+                    <span class="cmd-args">Args: label, role</span>
+                    <span class="cmd-desc">Links specific dropdown options to roles (e.g., "Billing" alerts Admin).</span>
+                </div>
+                <div class="command-block glass">
                     <span class="cmd-name">/claim</span>
                     <span class="cmd-args">Args: none</span>
                     <span class="cmd-desc">Assigns the current ticket to you, letting other staff know you are handling it.</span>
+                </div>
+            </div>
+
+            <div id="levels" class="doc-category">
+                <h2>Leveling & XP</h2>
+                <p>Gamification and activity tracking for Members.</p>
+                
+                <div class="command-block glass">
+                    <span class="cmd-name">/rank</span>
+                    <span class="cmd-args">Args: user (optional)</span>
+                    <span class="cmd-desc">Generates a visual rank card showing your level, XP, and progress bar.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/leaderboard</span>
+                    <span class="cmd-args">Args: none</span>
+                    <span class="cmd-desc">Displays the top 10 most active members in the server.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/reward add</span>
+                    <span class="cmd-args">Args: level, role</span>
+                    <span class="cmd-desc">Configures the bot to automatically give a Role when a user hits a specific Level.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/xp_multi_channel</span>
+                    <span class="cmd-args">Args: channel, multiplier</span>
+                    <span class="cmd-desc">Sets a channel as a bonus zone (e.g., 2x XP) to encourage activity there.</span>
                 </div>
             </div>
 
@@ -332,14 +392,55 @@
                     <span class="cmd-desc">Sets a personal DM reminder (e.g., /remind 1h Check emails).</span>
                 </div>
                 <div class="command-block glass">
+                    <span class="cmd-name">/timer_start</span>
+                    <span class="cmd-args">Args: duration, title</span>
+                    <span class="cmd-desc">Starts a public countdown timer in the channel.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/tag create</span>
+                    <span class="cmd-args">Args: name, content</span>
+                    <span class="cmd-desc">Creates a custom snippet/macro that can be recalled later using /tag use.</span>
+                </div>
+                <div class="command-block glass">
                     <span class="cmd-name">/sticky set</span>
                     <span class="cmd-args">Args: message</span>
                     <span class="cmd-desc">Pins a message to the bottom of the chat view, reappearing after every new message.</span>
                 </div>
                 <div class="command-block glass">
+                    <span class="cmd-name">/afk</span>
+                    <span class="cmd-args">Args: message</span>
+                    <span class="cmd-desc">Sets your status to AFK. Users who ping you will be told you are away.</span>
+                </div>
+                <div class="command-block glass">
                     <span class="cmd-name">/whois</span>
                     <span class="cmd-args">Args: user</span>
                     <span class="cmd-desc">Displays deep user analysis including join dates, roles, and account age.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/certify</span>
+                    <span class="cmd-args">Args: image_url</span>
+                    <span class="cmd-desc">Fun utility that stamps an image with a "Certified" watermark.</span>
+                </div>
+            </div>
+
+            <div id="fun" class="doc-category">
+                <h2>Giveaways & Events</h2>
+                <p>Community engagement tools.</p>
+                
+                <div class="command-block glass">
+                    <span class="cmd-name">/gstart</span>
+                    <span class="cmd-args">Args: duration, winners, prize, requirements</span>
+                    <span class="cmd-desc">Starts a giveaway. You can set requirements like "Must have Level 5 Role".</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/greroll</span>
+                    <span class="cmd-args">Args: message_id</span>
+                    <span class="cmd-desc">Picks a new winner for an ended giveaway if the previous winner was invalid.</span>
+                </div>
+                <div class="command-block glass">
+                    <span class="cmd-name">/suggest</span>
+                    <span class="cmd-args">Args: idea</span>
+                    <span class="cmd-desc">Posts your suggestion to the server's feedback channel with Up/Down voting buttons.</span>
                 </div>
             </div>
         </section>
@@ -411,7 +512,8 @@
     </main>
     <footer>
         <div class="container">
-            <span class="footer-logo">Horizon Studios</span>
+            <img src="horizon-logo.jpg" alt="Horizon Studios" style="height: 50px; display: block; margin: 0 auto 15px; border-radius: 8px;">
+            
             <div class="footer-links">
                 <a onclick="switchPage('home')">Home</a>
                 <a onclick="switchPage('tos')">Terms of Service</a>
