@@ -21,7 +21,7 @@
             --accent: #ffffff;
             --nav-height: 70px;
             --font-main: 'Inter', sans-serif;
-            --tint: rgba(255, 255, 255, 0.04); /* Dynamic Tint Variable */
+            --tint: rgba(255, 255, 255, 0.04);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
@@ -79,7 +79,7 @@
             display: inline-block; padding: 12px 24px;
             background: var(--text-main); color: var(--bg-deep);
             font-weight: 600; text-decoration: none; border-radius: 4px;
-            transition: transform 0.1s ease-out, opacity 0.2s; /* Snappy for magnetism */
+            transition: transform 0.1s ease-out, opacity 0.2s;
         }
         .btn:hover { opacity: 0.9; }
         .btn-outline { background: transparent; border: 1px solid var(--border-subtle); color: var(--text-main); }
@@ -96,6 +96,9 @@
         .nav-link { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; cursor: pointer; transition: color 0.2s; }
         .nav-link:hover, .nav-link.active { color: var(--text-main); }
         .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+
+        /* Mobile specific hidden links */
+        .mobile-only { display: none; } 
 
         /* Glitch Animation */
         @keyframes glitch-anim {
@@ -123,7 +126,6 @@
             animation: bob 3s ease-in-out infinite;
         }
         @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
         .live-badge {
             display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 255, 0, 0.1);
             border: 1px solid rgba(0, 255, 0, 0.3); padding: 5px 12px; border-radius: 20px;
@@ -226,41 +228,48 @@
         .legal-content ul { padding-left: 20px; } .legal-content li { margin-bottom: 8px; }
 
         @media (max-width: 768px) {
-            .nav-links.desktop { display: none; } .mobile-menu-btn { display: block; } .hero h1 { font-size: 2.5rem; }
+            .nav-links.desktop { display: none; } 
+            .mobile-menu-btn { display: block; } 
+            .hero h1 { font-size: 2.5rem; }
+            /* When menu is active, we show these */
+            .nav-links.active .mobile-only { display: block; margin-top: 10px; padding-top: 10px; border-top: 1px solid #333; }
         }
     </style>
 </head>
 <body>
 
-    <!-- EXTRAS -->
     <div id="preloader"><div class="loader-content"><img src="hyper-logo.jpg" style="width: 80px; border-radius: 50%; margin-bottom: 20px;"><h2 style="font-family: 'JetBrains Mono';">INITIALIZING...</h2></div></div>
     <div id="progress-container"><div id="progress-bar"></div></div>
     <div class="starfield"><div class="stars"></div></div>
     <div id="toast">Command Copied!</div>
     <button id="rocket-btn" title="Back to Top">🚀</button>
 
-    <!-- NAVIGATION -->
     <nav class="glass">
         <div class="container" style="display:flex; width:100%; justify-content:space-between; align-items:center;">
             <div class="nav-logo" onclick="switchPage('home')">
                 <img src="hyper-logo.jpg" alt="Hyper" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
                 HYPER
             </div>
+            
             <div class="nav-links desktop">
                 <a onclick="switchPage('home')" class="nav-link">Home</a>
                 <a onclick="switchPage('guide')" class="nav-link">Documentation</a>
                 <a href="#" class="nav-link">Support Server</a>
+                
+                <a onclick="switchPage('tos')" class="nav-link mobile-only">Terms of Service</a>
+                <a onclick="switchPage('privacy')" class="nav-link mobile-only">Privacy Policy</a>
+                
                 <a href="#" class="btn" style="margin-left:10px;">Add to Discord</a>
             </div>
+
             <button class="mobile-menu-btn">☰</button>
         </div>
     </nav>
 
     <main class="container">
-        <!-- ================= HOME PAGE ================= -->
         <section id="home" class="page-section active">
             <div class="hero">
-                <div class="live-badge"><div class="live-dot"></div> <span id="live-user-count">14,204</span> Users Online</div>
+                <div class="live-badge"><div class="live-dot"></div> <span id="live-user-count">...</span> Users Online</div>
                 <img src="hyper-logo.jpg" class="hero-logo" alt="Hyper Bot Logo">
                 <h1>The Only Bot For <span id="typewriter" style="color:#fff; text-decoration:underline; text-decoration-color: rgba(255,255,255,0.3);">Moderation</span></h1>
                 <p>Complete protection, engagement, and utility for your Discord community. Powered by Horizon Studios.</p>
@@ -270,7 +279,6 @@
                 </div>
             </div>
 
-            <!-- LIVE STATS COUNTER -->
             <div class="glass" style="margin: 40px auto; padding: 30px; border-radius: 12px; display: flex; justify-content: space-around; max-width: 800px; text-align: center;">
                 <div><h2 style="font-size: 2.5rem; margin-bottom: 5px;" class="counter" data-target="150">0</h2><span style="color: var(--text-muted);">Servers</span></div>
                 <div><h2 style="font-size: 2.5rem; margin-bottom: 5px;" class="counter" data-target="12500">0</h2><span style="color: var(--text-muted);">Users</span></div>
@@ -286,7 +294,6 @@
                 <div class="feature-card glass"><h3>🔧 Utilities</h3><p>Reminders, AFK statuses, sticky messages, and user certification tools.</p></div>
             </div>
         </section>
-        <!-- ================= DOCUMENTATION (FULL) ================= -->
         <section id="guide" class="page-section">
             <div class="hero" style="padding: 40px 0;">
                 <h1>Documentation</h1>
@@ -308,7 +315,6 @@
                 </div>
             </div>
 
-            <!-- A. Administration -->
             <div id="admin" class="doc-category">
                 <h2>Administration & Setup</h2>
                 <div class="command-block glass"><span class="cmd-name">/setmodrole</span><span class="cmd-args">Args: role</span><span class="cmd-desc">The "Master Key" command. Authorizes a specific role to use moderator commands.</span></div>
@@ -317,7 +323,6 @@
                 <div class="command-block glass"><span class="cmd-name">/rolepanel</span><span class="cmd-args">Args: channel, title</span><span class="cmd-desc">Creates a reaction role menu allowing users to self-assign roles.</span></div>
             </div>
 
-            <!-- B. Moderation -->
             <div id="mod" class="doc-category">
                 <h2>Moderation</h2>
                 <div class="command-block glass"><span class="cmd-name">/ban</span><span class="cmd-args">Args: user, reason</span><span class="cmd-desc">Permanently bans a user from the server.</span></div>
@@ -330,7 +335,6 @@
                 <div class="command-block glass"><span class="cmd-name">/nuke</span><span class="cmd-args">Args: none</span><span class="cmd-desc">Clones and deletes the current channel to wipe all history instantly. Irreversible.</span></div>
             </div>
 
-            <!-- C. Tickets -->
             <div id="tickets" class="doc-category">
                 <h2>Support Tickets</h2>
                 <div class="command-block glass"><span class="cmd-name">/setup_ticket</span><span class="cmd-args">Args: channel, category</span><span class="cmd-desc">Deploys the "Create Ticket" panel to a channel.</span></div>
@@ -338,7 +342,6 @@
                 <div class="command-block glass"><span class="cmd-name">/claim</span><span class="cmd-args">Args: none</span><span class="cmd-desc">Assigns the current ticket to you, letting other staff know you are handling it.</span></div>
             </div>
 
-            <!-- D. Leveling & XP -->
             <div id="levels" class="doc-category">
                 <h2>Leveling & XP</h2>
                 <div class="command-block glass"><span class="cmd-name">/rank</span><span class="cmd-args">Args: user (optional)</span><span class="cmd-desc">Generates a visual rank card showing your level, XP, and progress bar.</span></div>
@@ -347,7 +350,6 @@
                 <div class="command-block glass"><span class="cmd-name">/xp_multi_channel</span><span class="cmd-args">Args: channel, multiplier</span><span class="cmd-desc">Sets a channel as a bonus zone (e.g., 2x XP) to encourage activity there.</span></div>
             </div>
 
-            <!-- E. Utilities -->
             <div id="utility" class="doc-category">
                 <h2>Utilities</h2>
                 <div class="command-block glass"><span class="cmd-name">/remind</span><span class="cmd-args">Args: time, message</span><span class="cmd-desc">Sets a personal DM reminder (e.g., /remind 1h Check emails).</span></div>
@@ -359,7 +361,6 @@
                 <div class="command-block glass"><span class="cmd-name">/certify</span><span class="cmd-args">Args: image_url</span><span class="cmd-desc">Fun utility that stamps an image with a "Certified" watermark.</span></div>
             </div>
 
-            <!-- F. Giveaways & Fun -->
             <div id="fun" class="doc-category">
                 <h2>Giveaways & Events</h2>
                 <div class="command-block glass"><span class="cmd-name">/gstart</span><span class="cmd-args">Args: duration, winners, prize, requirements</span><span class="cmd-desc">Starts a giveaway. You can set requirements like "Must have Level 5 Role".</span></div>
@@ -368,7 +369,6 @@
             </div>
         </section>
 
-        <!-- ================= LEGAL PAGES ================= -->
         <section id="tos" class="page-section">
             <div class="legal-content">
                 <h1>Terms of Service</h1><span class="date">Last Updated: January 1, 2026</span>
@@ -394,7 +394,6 @@
             </div>
         </section>
     </main>
-    <!-- HOTKEY MODAL -->
     <div id="hotkey-modal">
         <div class="hotkey-content">
             <h2 style="margin-bottom:20px;">⌨️ Keyboard Shortcuts</h2>
@@ -416,10 +415,9 @@
         </div>
     </footer>
 
-    <!-- LOGIC -->
     <script>
         // --- CONFIGURATION ---
-        const BIN_ID = "69574a2ed0ea881f404ed791"; // Your JSONBin ID
+        const BIN_ID = "695750e143b1c97be913a967"; // Your Bin ID
         const audio = {
             hover: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
             click: new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'),
@@ -436,9 +434,8 @@
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             setupScrollReveal();
-            startCounters();
+            startCounters(); // This now handles the badge too
             typeWriter();
-            initLiveBadge();
             initMagneticBtns();
             initRocket();
             initHotkeys();
@@ -466,32 +463,69 @@
                 card.addEventListener('mouseleave', () => card.style.transform = 'perspective(1000px) scale(1) rotateX(0) rotateY(0)');
             });
 
-            // Mobile Menu
+            // Mobile Menu Logic (Updated to Show/Hide)
             document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
                 const nav = document.querySelector('.nav-links');
-                nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-                if(nav.style.display === 'flex') { nav.style.flexDirection = 'column'; nav.style.position = 'absolute'; nav.style.top = '70px'; nav.style.left = '0'; nav.style.width = '100%'; nav.style.background = '#050505'; nav.style.padding = '20px'; }
+                // Toggle a class "active" to make styling easier
+                if(nav.style.display === 'flex') {
+                     nav.style.display = 'none';
+                     nav.classList.remove('active');
+                } else {
+                     nav.style.display = 'flex';
+                     nav.classList.add('active');
+                     nav.style.flexDirection = 'column'; 
+                     nav.style.position = 'absolute'; 
+                     nav.style.top = '70px'; 
+                     nav.style.left = '0'; 
+                     nav.style.width = '100%'; 
+                     nav.style.background = '#050505'; 
+                     nav.style.padding = '20px';
+                     nav.style.borderBottom = '1px solid #333';
+                }
             });
         });
 
-        // --- FEATURES ---
+        // --- REAL-TIME STATS ---
         async function startCounters() {
             if(counted) return;
+            
             const serverEl = document.querySelector('.counter[data-target="150"]');
             const userEl = document.querySelector('.counter[data-target="12500"]');
+            const moduleEl = document.querySelector('.counter[data-target="16"]'); // Select the Module counter
             
+            const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}/latest`;
+
+            let serverCount = 0;
+            let userCount = 0;
+            let moduleCount = 16; 
+
             try {
-                const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`);
+                const response = await fetch(API_URL);
                 const json = await response.json();
-                animateValue(serverEl, json.record.servers);
-                animateValue(userEl, json.record.users);
+                
+                serverCount = json.record.servers;
+                userCount = json.record.users;
+                moduleCount = json.record.modules || 16; // Use 16 if missing
+                
+                // UPDATE THE GREEN BADGE WITH REAL NUMBERS
+                const badgeEl = document.getElementById('live-user-count');
+                if(badgeEl) badgeEl.innerText = userCount.toLocaleString();
+                
             } catch (error) {
-                animateValue(serverEl, 150); animateValue(userEl, 12500);
+                console.warn("Stats Fetch Failed. Using fallbacks.");
+                serverCount = 150; 
+                userCount = 12500;
             }
+
+            animateValue(serverEl, serverCount);
+            animateValue(userEl, userCount);
+            animateValue(moduleEl, moduleCount);
+            
             counted = true;
         }
 
         function animateValue(obj, target) {
+            if(!obj) return;
             let startTimestamp = null;
             const step = (timestamp) => {
                 if (!startTimestamp) startTimestamp = timestamp;
@@ -507,6 +541,12 @@
             document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
             const target = document.getElementById(pageId);
             if (target) { target.classList.add('active'); window.scrollTo(0, 0); setTimeout(setupScrollReveal, 100); }
+            
+            // Close mobile menu if open
+            if(window.innerWidth <= 768) {
+                document.querySelector('.nav-links').style.display = 'none';
+                document.querySelector('.nav-links').classList.remove('active');
+            }
         }
 
         function setupScrollReveal() {
@@ -562,9 +602,6 @@
             }, { threshold: 0.5 });
             document.querySelectorAll('.doc-category').forEach(sec => observer.observe(sec));
         }
-
-        // Live Badge Fake Update
-        function initLiveBadge() { setInterval(() => { const el = document.getElementById('live-user-count'); let cur = parseInt(el.innerText.replace(/,/g,'')); el.innerText = (cur + Math.floor(Math.random()*10)-4).toLocaleString(); }, 3000); }
 
         // Magnetic Btns
         function initMagneticBtns() { document.querySelectorAll('.btn').forEach(btn => { btn.addEventListener('mousemove', (e) => { const rect = btn.getBoundingClientRect(); btn.style.transform = `translate(${(e.clientX - rect.left - rect.width/2)/5}px, ${(e.clientY - rect.top - rect.height/2)/5}px)`; }); btn.addEventListener('mouseleave', () => btn.style.transform = 'translate(0, 0)'); }); }
