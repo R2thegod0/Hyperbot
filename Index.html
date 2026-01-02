@@ -208,9 +208,12 @@
         footer { border-top: 1px solid var(--border-subtle); padding: 40px 0; margin-top: 80px; text-align: center; }
         .footer-links a { color: var(--text-muted); margin: 0 10px; text-decoration: none; font-size: 0.9rem; }
         .footer-links a:hover { color: white; }
-        .legal-content { max-width: 800px; margin: 0 auto; }
-        .legal-content h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .legal-content ul { padding-left: 20px; } .legal-content li { margin-bottom: 8px; }
+        .legal-content { max-width: 800px; margin: 0 auto; text-align: left;}
+        .legal-content h1 { font-size: 2.5rem; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        .legal-content h2 { font-size: 1.5rem; margin-top: 30px; margin-bottom: 15px; color: #fff; }
+        .legal-content p { margin-bottom: 15px; color: #ccc; }
+        .legal-content ul { padding-left: 20px; margin-bottom: 15px; } 
+        .legal-content li { margin-bottom: 8px; color: #ccc; }
 
         @media (max-width: 768px) {
             .nav-links.desktop { display: none; } .mobile-menu-btn { display: block; } .hero h1 { font-size: 2.5rem; }
@@ -387,10 +390,78 @@
         </section>
 
         <section id="tos" class="page-section">
-            <div class="legal-content"><h1>Terms of Service</h1><span class="date">Last Updated: January 1, 2026</span><p><strong>1. Acceptance</strong><br>By inviting Hyper, you agree to these terms.</p><p><strong>2. Usage</strong><br>Do not abuse the API or reverse engineer code.</p><p><strong>3. Liability</strong><br>Provided AS IS. Not liable for damages.</p></div>
+            <div class="legal-content">
+                <h1>Terms of Service</h1>
+                <span class="date">Effective Date: January 2, 2026</span>
+                
+                <h2>1. Introduction</h2>
+                <p>Welcome to Hyper Bot ("we," "our," or "the Bot"). By inviting, installing, or using Hyper Bot in your Discord server, you agree to be bound by these Terms of Service. If you do not agree to these terms, you must remove the Bot from your server immediately.</p>
+                
+                <h2>2. License to Use</h2>
+                <p>We grant you a limited, non-exclusive, non-transferable, revocable license to use Hyper Bot for your personal or community Discord servers in accordance with these Terms.</p>
+                
+                <h2>3. Usage Restrictions</h2>
+                <p>You agree not to:</p>
+                <ul>
+                    <li>Use the Bot for any illegal purposes or to violate Discord's Terms of Service or Community Guidelines.</li>
+                    <li>Attempt to reverse engineer, decompile, or copy the Bot's source code or proprietary features.</li>
+                    <li>Exploit bugs or vulnerabilities in the Bot for personal gain or malicious intent.</li>
+                    <li>Use the Bot to spam, harass, or harm other users.</li>
+                </ul>
+                
+                <h2>4. Availability & Termination</h2>
+                <p>We strive to maintain 99.9% uptime, but we do not guarantee uninterrupted service. We reserve the right to modify, suspend, or terminate the Bot or your access to it at any time, for any reason, without notice. This includes, but is not limited to, violations of these Terms.</p>
+                
+                <h2>5. Intellectual Property</h2>
+                <p>All rights, title, and interest in and to Hyper Bot, including its code, design, logos (including the "H" logo), and features, are the exclusive property of Horizon Studios. You may not claim ownership of the Bot.</p>
+                
+                <h2>6. Disclaimer of Warranties</h2>
+                <p>THE BOT IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. WE DISCLAIM ALL WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+                
+                <h2>7. Limitation of Liability</h2>
+                <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, HORIZON STUDIOS SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE BOT, INCLUDING LOSS OF DATA, SERVER MEMBERS, OR REPUTATION.</p>
+                
+                <h2>8. Contact Information</h2>
+                <p>For questions regarding these Terms, please contact us at: <strong>horizonstudios.buisness@gmail.com</strong> or via our official Support Server.</p>
+            </div>
         </section>
+
         <section id="privacy" class="page-section">
-            <div class="legal-content"><h1>Privacy Policy</h1><span class="date">Last Updated: January 1, 2026</span><p>We collect basic IDs for functionality. We do not store messages.</p></div>
+            <div class="legal-content">
+                <h1>Privacy Policy</h1>
+                <span class="date">Effective Date: January 2, 2026</span>
+                
+                <h2>1. Overview</h2>
+                <p>Horizon Studios ("we") values your privacy. This Privacy Policy explains what data Hyper Bot collects, how we use it, and your rights regarding that data. We are committed to transparency and compliance with Discord's Developer Policy.</p>
+                
+                <h2>2. Data We Collect</h2>
+                <p>To function correctly, Hyper Bot collects and stores the following data:</p>
+                <ul>
+                    <li><strong>User IDs:</strong> To identify users for leveling, moderation history, and economy features.</li>
+                    <li><strong>Server IDs:</strong> To save server-specific configurations (prefixes, welcome channels, log channels).</li>
+                    <li><strong>Role IDs & Channel IDs:</strong> To manage permissions and send messages to the correct locations.</li>
+                    <li><strong>Moderation History:</strong> Reasons for bans, kicks, and warns are stored to provide history logs.</li>
+                </ul>
+                <p><strong>Note on Message Content:</strong> We do NOT permanently store the content of your messages. Message content is processed in Random Access Memory (RAM) solely for the purpose of Auto-Moderation (detecting spam/slurs) and is discarded immediately after processing.</p>
+                
+                <h2>3. How We Use Your Data</h2>
+                <p>We use the collected data solely for the following purposes:</p>
+                <ul>
+                    <li>Providing core bot functionality (e.g., tracking XP, enforcing bans).</li>
+                    <li>Maintaining the security and integrity of the Bot.</li>
+                    <li> analyzing aggregate usage statistics (e.g., total server count) to improve performance.</li>
+                </ul>
+                <p>We do <strong>not</strong> sell, trade, or rent your personal data to third parties.</p>
+                
+                <h2>4. Data Retention</h2>
+                <p>Data is retained only as long as necessary to provide the service. If the Bot is removed from a server, configuration data for that server may be deleted from our database after 30 days. User economy and leveling data is retained unless a deletion request is made.</p>
+                
+                <h2>5. Third-Party Services</h2>
+                <p>The Bot is hosted on third-party infrastructure. While we implement security measures, we cannot guarantee the absolute security of data transmission over the internet. By using Discord, you are also subject to Discord's own Privacy Policy.</p>
+                
+                <h2>6. Your Rights (Data Deletion)</h2>
+                <p>You have the right to request a copy of your data or request its deletion. To exercise these rights, please contact us at <strong>horizonstudios.buisness@gmail.com</strong> with your User ID and the specific request. We will process verified requests within 30 days.</p>
+            </div>
         </section>
     </main>
 
